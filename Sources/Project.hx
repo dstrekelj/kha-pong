@@ -15,9 +15,14 @@ class Project {
 		System.notifyOnRender(render);
 		Scheduler.addTimeTask(update, 0, 1 / 60);
 		
+		kha.math.Random.init(20160611);
+		
 		paddle1 = new Paddle(100, System.windowHeight() / 2);
 		paddle2 = new Paddle(System.windowWidth() - 100, System.windowHeight() / 2);
 		ball = new Ball(System.windowWidth() / 2, System.windowHeight() / 2);
+		
+		paddle1.willCollideWith(ball);
+		paddle2.willCollideWith(ball);
 	}
 
 	function update(): Void {
