@@ -9,10 +9,12 @@ class Paddle {
     var height : Float;
     
     var ball : Ball;
+    var player : Player;
     
-    public function new(x : Float, y : Float) {
+    public function new(x : Float, y : Float, player : Player) {
         this.x = x;
         this.y = y;
+        this.player = player;
         
         dy = 0;
         
@@ -38,14 +40,31 @@ class Paddle {
     }
     
     public function handleKeyDown(key : kha.Key, char : String) {
-        switch (char) {
-            case "w": dy = -v;
-            case "s": dy = v;
+        if (player == Player.PLAYER_1) {
+            switch (char) {
+                case "w": dy = -v;
+                case "s": dy = v;
+            }
+        } else {
+            switch (char) {
+                case "o": dy = -v;
+                case "l": dy = v;
+            }
         }
     }
     
     public function handleKeyUp(key : kha.Key, char : String) {
-        dy = 0;
+        if (player == Player.PLAYER_1) {
+            switch (char) {
+                case "w": dy = 0;
+                case "s": dy = 0;
+            }
+        } else {
+            switch (char) {
+                case "o": dy = 0;
+                case "l": dy = 0;
+            }
+        }
     }
     
     @:access(entities.Ball)
