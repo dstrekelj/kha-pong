@@ -1,59 +1,58 @@
 package entities;
 
-class Paddle {
-    var x : Float;
-    var y : Float;
-    var dy : Float;
-    var v : Float;
-    var width : Float;
-    var height : Float;
-    
-    var ball : Ball;
+import kha.graphics2.Graphics;
+import kha.input.Keyboard;
+import kha.Key;
+import kha.System;
+
+class Paddle extends Entity {
     var player : Player;
+    var dy : Int;
+    var v : Float;
     
-    public function new(x : Float, y : Float, player : Player) {
-        this.x = x;
-        this.y = y;
+    public function new(player : Player) {
+        super(0, 0, 16, 64);
+        
         this.player = player;
         
         dy = 0;
         
-        v = 6;
+        v = 8;
         
-        width = 16;
-        height = 64;
-        
-        if (kha.input.Keyboard.get() != null) kha.input.Keyboard.get().notify(handleKeyDown, handleKeyUp);
+        if (Keyboard.get() != null) {
+            Keyboard.get().notify(onKeyDown, onKeyUp);
+        }
     }
     
     public function update() : Void {
-        handleBallCollision(ball);
-        y += dy;
+        y += dy * v;
+        
+        if (y < 0) {
+            y = 0;
+        } else if ((y + height) > System.windowHeight()) {
+            y = System.windowHeight() - height;
+        }
     }
     
-    public function draw(g : kha.graphics2.Graphics) : Void {
-        g.fillRect(x - width / 2, y - height / 2, width, height);
+    public function draw(g : Graphics) : Void {
+        g.fillRect(x, y, width, height);
     }
     
-    public function willCollideWith(ball : Ball) {
-        this.ball = ball;
-    }
-    
-    public function handleKeyDown(key : kha.Key, char : String) {
+    private function onKeyDown(key : Key, char : String) : Void {
         if (player == Player.PLAYER_1) {
             switch (char) {
-                case "w": dy = -v;
-                case "s": dy = v;
+                case "w": dy = -1;
+                case "s": dy = 1;
             }
         } else {
             switch (char) {
-                case "o": dy = -v;
-                case "l": dy = v;
+                case "o": dy = -1;
+                case "l": dy = 1;
             }
         }
     }
     
-    public function handleKeyUp(key : kha.Key, char : String) {
+    private function onKeyUp(key : Key, char : String) : Void {
         if (player == Player.PLAYER_1) {
             switch (char) {
                 case "w": dy = 0;
@@ -65,27 +64,5 @@ class Paddle {
                 case "l": dy = 0;
             }
         }
-    }
-    
-    @:access(entities.Ball)
-    function handleBallCollision(ball : Ball) : Void {
-        if (hitTest(ball)) {
-            ball.dx *= -1;
-        }
-    }
-    
-    @:access(entities.Ball)
-    function hitTest(ball : Ball) : Bool {
-        var paddleL = x - width / 2;
-        var paddleR = x + width / 2;
-        var paddleT = y - height / 2;
-        var paddleB = y + height / 2;
-        
-        var ballL = ball.x - ball.r;
-        var ballR = ball.x + ball.r;
-        var ballT = ball.y - ball.r;
-        var ballB = ball.y + ball.r;
-        
-        return (ballL >= paddleL) && (ballR <= paddleR) && (ballT >= paddleT) && (ballB <= paddleB);
     }
 }

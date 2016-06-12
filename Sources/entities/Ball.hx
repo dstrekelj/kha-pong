@@ -1,44 +1,33 @@
 package entities;
 
+import kha.System;
+import kha.graphics2.Graphics;
 import kha.math.Random.Default;
 
-class Ball {
-    var x : Float;
-    var y : Float;
-    var r : Float;
+class Ball extends Entity {
     var dx : Int;
     var dy : Int;
     var v : Float;
     
-    public function new(x : Float, y : Float) {
-        this.x = x;
-        this.y = y;
+    public function new() {
+        super(0, 0, 16, 16);
         
         dx = Default.GetIn(0, 1) == 0 ? -1 : 1;
         dy = Default.GetIn(0, 1) == 0 ? -1 : 1;
         
         v = 4;
-        r = 8;
     }
     
     public function update() : Void {
-        handleWindowCollision();
-        
         x += dx * v;
         y += dy * v;
-    }
-    
-    public function draw(g : kha.graphics2.Graphics) : Void {
-        g.fillRect(x - r, y - r, r * 2, r * 2);
-    }
-    
-    function handleWindowCollision() : Void {
-        if (((x + r) > kha.System.windowWidth()) || ((x - r) < 0)) {
-            dx *= -1;
-        }
         
-        if (((y + r) > kha.System.windowHeight()) || ((y - r) < 0)) {
+        if (((y + height) > System.windowHeight()) || (y < 0)) {
             dy *= -1;
         }
+    }
+    
+    public function draw(g : Graphics) : Void {
+        g.fillRect(x, y, width, height);
     }
 }
