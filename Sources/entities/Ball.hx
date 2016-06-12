@@ -15,7 +15,7 @@ class Ball extends Entity {
         dx = Default.GetIn(0, 1) == 0 ? -1 : 1;
         dy = Default.GetIn(0, 1) == 0 ? -1 : 1;
         
-        v = 4;
+        v = 5;
     }
     
     public function update() : Void {
@@ -29,5 +29,19 @@ class Ball extends Entity {
     
     public function draw(g : Graphics) : Void {
         g.fillRect(x, y, width, height);
+    }
+    
+    public function checkCollision(p : Paddle) {
+        if (this.overlapsEntity(p)) {
+            dx *= -1;
+            
+            if (y < (p.y + 0.3 * p.height)) {
+                dy = -1;
+            } else if (y > (p.y + 0.6 * p.height)) {
+                dy = 1;
+            } else {
+                dy = 0;
+            }
+        }
     }
 }

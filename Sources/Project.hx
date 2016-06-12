@@ -21,6 +21,9 @@ class Project {
 		paddleR = new Paddle(Player.PLAYER_2);
 		ball = new Ball();
 		
+		paddleL.positionCenter(128, System.windowHeight() / 2);
+		paddleR.positionCenter(System.windowWidth() - 128, System.windowHeight() / 2);
+		
 		init();
 	}
 
@@ -31,7 +34,12 @@ class Project {
 		
 		if (ball.x < 0 || ball.x > System.windowWidth()) {
 			init();
+		} else if (ball.x < System.windowWidth() / 2) {
+			ball.checkCollision(paddleL);
+		} else {
+			ball.checkCollision(paddleR);
 		}
+		
 	}
 
 	function render(framebuffer: Framebuffer): Void {
@@ -48,8 +56,6 @@ class Project {
 	}
 	
 	function init() : Void {
-		paddleL.positionCenter(128, System.windowHeight() / 2);
-		paddleR.positionCenter(System.windowWidth() - 128, System.windowHeight() / 2);
 		ball.positionCenter(System.windowWidth() / 2, System.windowHeight() / 2);
 	}
 }
