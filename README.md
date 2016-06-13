@@ -1,3 +1,5 @@
+<p align="center"><img src="screenshot.png" /></p>
+
 # kha-pong
 
 Sources for a Pong (1972) arcade video game clone, written in [Haxe](http://haxe.org/) using the [Kha](http://kha.tech/) framework.
