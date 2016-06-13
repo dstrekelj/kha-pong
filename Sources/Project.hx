@@ -32,9 +32,6 @@ class Project {
 		paddleR = new Paddle(Player.PLAYER_2);
 		ball = new Ball();
 		
-		paddleL.positionCenter(128, System.windowHeight() / 2);
-		paddleR.positionCenter(System.windowWidth() - 128, System.windowHeight() / 2);
-		
 		init();
 	}
 
@@ -58,19 +55,26 @@ class Project {
 		g2.begin(kha.Color.Black);
 		g2.color = kha.Color.White;
 		g2.font = font;
-		g2.fontSize = 64;
 		
 		g2.drawLine(System.windowWidth() / 2, 0, System.windowWidth() / 2, System.windowHeight());
 		paddleL.draw(g2);
 		paddleR.draw(g2);
 		ball.draw(g2);
+		
+		g2.fontSize = 64;
 		g2.drawString(Std.string(scoreL), System.windowWidth() / 3, 16);
 		g2.drawString(Std.string(scoreR), System.windowWidth() * 2 / 3, 16);
+		
+		g2.fontSize = 16;
+		g2.drawString("PLAYER 1: W - UP, S - DOWN", 0, System.windowHeight() - 16);
+		g2.drawString("PLAYER 2: O - UP, L - DOWN", System.windowWidth() / 2, System.windowHeight() - 16);
 		
 		g2.end();
 	}
 	
 	function init() : Void {
+		paddleL.positionCenter(128, System.windowHeight() / 2);
+		paddleR.positionCenter(System.windowWidth() - 128, System.windowHeight() / 2);
 		ball.positionCenter(System.windowWidth() / 2, System.windowHeight() / 2);
 	}
 }

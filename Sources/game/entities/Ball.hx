@@ -33,6 +33,9 @@ class Ball extends Entity {
     
     public function checkCollision(p : Paddle) {
         if (this.overlapsEntity(p)) {
+            x -= dx * v;
+            y -= dy * v;
+            
             dx *= -1;
             
             if (y < (p.y + 0.3 * p.height)) {
