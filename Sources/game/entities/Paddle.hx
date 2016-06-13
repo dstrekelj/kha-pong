@@ -1,4 +1,4 @@
-package entities;
+package game.entities;
 
 import kha.graphics2.Graphics;
 import kha.input.Keyboard;
