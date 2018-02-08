@@ -1,4 +1,4 @@
-var project = new Project('New Project');
+let project = new Project('KHA PONG');
 project.addAssets('Assets/**');
 project.addSources('Sources');
-return project;
+resolve(project);
